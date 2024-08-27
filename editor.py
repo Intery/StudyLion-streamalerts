@@ -56,7 +56,7 @@ class AlertEditorUI(MessageUI):
             data.streamerid,
             utc_now() - dt.timedelta(hours=1),
             -1,
-            "Discord Admin",
+            "Art",
             "Testing Go Live Message",
             utc_now()
         )

@@ -47,6 +47,9 @@ class AlertSettings(SettingGroup):
             '{login_name}': "Twitch channel login name (as in url)",
             '{channel_link}': "Link to the live twitch channel",
             '{stream_start}': "Numeric timestamp when stream went live",
+            '{stream_start_iso}': "ISO timestamp when stream went live (for embed timestamp)",
+            '{title}': "Title of the stream when it went live",
+            '{game}': "Game name of the stream when it went live"
         }
         # TODO: More stuff
 
@@ -71,13 +74,15 @@ class AlertSettings(SettingGroup):
                     '{login_name}': streamer.login_name,
                     '{channel_link}': f"https://www.twitch.tv/{streamer.login_name}",
                     '{stream_start}': int(stream.start_at.timestamp()),
+                    '{stream_start_iso}': stream.start_at.isoformat(),
+                    '{title}': stream.title,
+                    '{game}': stream.game_name,
                 }
 
-                recurse_map(
+                return recurse_map(
                     lambda loc, value: replace_multiple(value, mapping) if isinstance(value, str) else value,
                     data_dict,
                 )
-                return data_dict
             return formatter
 
         async def editor_callback(self, editor_data):
@@ -127,7 +132,11 @@ class AlertSettings(SettingGroup):
             '{login_name}': "Twitch channel login name (as in url)",
             '{channel_link}': "Link to the live twitch channel",
             '{stream_start}': "Numeric timestamp when stream went live",
+            '{stream_start_iso}': "ISO timestamp when stream went live (for embed timestamp)",
             '{stream_end}': "Numeric timestamp when stream ended",
+            '{stream_end_iso}': "ISO timestamp when stream ended (for embed timestamp)",
+            '{title}': "Title of the stream when it went live",
+            '{game}': "Game name of the stream when it went live",
         }
 
         @property
@@ -156,13 +165,16 @@ class AlertSettings(SettingGroup):
                     '{channel_link}': f"https://www.twitch.tv/{streamer.login_name}",
                     '{stream_start}': int(stream.start_at.timestamp()),
                     '{stream_end}': int(stream.end_at.timestamp()),
+                    '{stream_start_iso}': stream.start_at.isoformat(),
+                    '{stream_end_iso}': stream.end_at.isoformat(),
+                    '{title}': stream.title,
+                    '{game}': stream.game_name,
                 }
 
-                recurse_map(
+                return recurse_map(
                     lambda loc, value: replace_multiple(value, mapping) if isinstance(value, str) else value,
                     data_dict,
                 )
-                return data_dict
             return formatter
 
         async def editor_callback(self, editor_data):
