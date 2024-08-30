@@ -1,0 +1,1 @@
+from .streamalerts import setup
